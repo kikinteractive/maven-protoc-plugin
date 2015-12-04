@@ -125,7 +125,7 @@ public final class ProtocCompileCustomMojo extends AbstractProtocCompileMojo {
     protected void addProtocBuilderParameters(final Protoc.Builder protocBuilder) throws MojoExecutionException {
         super.addProtocBuilderParameters(protocBuilder);
 
-        protocBuilder.setNativePluginId(pluginId);
+        protocBuilder.setNativePluginId(sanitizePluginId(pluginId));
         if (pluginToolchain != null && pluginTool != null) {
             //get toolchain from context
             final Toolchain tc = toolchainManager.getToolchainFromBuildContext(pluginToolchain, session);
@@ -152,6 +152,9 @@ public final class ProtocCompileCustomMojo extends AbstractProtocCompileMojo {
             protocBuilder.setNativePluginParameter(pluginParameter);
         }
         protocBuilder.setCustomOutputDirectory(getOutputDirectory());
+        if (pluginId.equals("grpc-python")) {
+            protocBuilder.setPythonOutputDirectory(getOutputDirectory());
+        }
     }
 
     @Override

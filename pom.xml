@@ -6,18 +6,13 @@
     <artifactId>maven-protoc-plugin</artifactId>
     <packaging>maven-plugin</packaging>
     <name>Maven Protoc Plugin</name>
-    <version>0.4.4-SNAPSHOT</version>
+    <version>0.4.4-Kik-Hack</version>
     <url>https://github.com/sergei-ivanov/maven-protoc-plugin</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <!-- JDK version -->
-        <java.sdk.version>1.6</java.sdk.version>
-        <!-- Settings for the java compiler -->
-        <java.compiler.compilerVersion>${java.sdk.version}</java.compiler.compilerVersion>
-        <java.compiler.source>${java.sdk.version}</java.compiler.source>
-        <java.compiler.target>${java.sdk.version}</java.compiler.target>
+
 
         <mavenVersion>3.0</mavenVersion>
         <plexusComponentVersion>1.6</plexusComponentVersion>
@@ -76,32 +71,17 @@
     </contributors>
 
     <scm>
-        <url>https://github.com/sergei-ivanov/maven-protoc-plugin</url>
-        <connection>scm:git:git://github.com/sergei-ivanov/maven-protoc-plugin.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/sergei-ivanov/maven-protoc-plugin.git</developerConnection>
+        <url>https://github.com/kikinteractive/maven-protoc-plugin</url>
+        <connection>scm:git:git://github.com/kikinteractive/maven-protoc-plugin.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/kikinteractive/maven-protoc-plugin.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
-    <distributionManagement>
-        <downloadUrl>https://bintray.com/sergei-ivanov/maven/maven-protoc-plugin/view</downloadUrl>
-        <site>
-            <!--
-                release:perform checks this element to determine whether site-deploy goal needs to be run.
-                The actual site deployment is done by GitHub site-maven-plugin, so the URL here is not used.
-            -->
-            <id>gh-pages</id>
-            <url>https://github.com/sergei-ivanov/maven-protoc-plugin/tree/gh-pages</url>
-        </site>
-        <repository>
-            <id>bintray</id>
-            <name>Releases on Bintray</name>
-            <url>https://api.bintray.com/maven/sergei-ivanov/maven/maven-protoc-plugin</url>
-        </repository>
-    </distributionManagement>
+
 
     <issueManagement>
         <system>Github</system>
-        <url>https://github.com/sergei-ivanov/maven-protoc-plugin/issues/</url>
+        <url>https://github.com/kikinteractive/maven-protoc-plugin/issues/</url>
     </issueManagement>
 
     <build>
@@ -229,9 +209,6 @@
                                 <requireMavenVersion>
                                     <version>[${mavenVersion},)</version>
                                 </requireMavenVersion>
-                                <requireJavaVersion>
-                                    <version>[${java.sdk.version},)</version>
-                                </requireJavaVersion>
                             </rules>
                             <fail>true</fail>
                         </configuration>
@@ -286,27 +263,7 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-toolchains-plugin</artifactId>
-                <inherited>true</inherited>
-                <executions>
-                    <execution>
-                        <id>default-toolchain</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>toolchain</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <toolchains>
-                        <jdk>
-                            <version>[${java.sdk.version},)</version>
-                        </jdk>
-                    </toolchains>
-                </configuration>
-            </plugin>
+
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -576,8 +533,8 @@
 
         <profile>
             <!--
-               A separate set of executions to be performed when running the release goals.
-           -->
+                A separate set of executions to be performed when running the release goals.
+            -->
             <id>release</id>
             <build>
                 <plugins>
@@ -723,4 +680,35 @@
             </exclusions>
         </dependency>
     </dependencies>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>apache.snapshots</id>
+            <name>Apache Snapshots</name>
+            <url>https://repository.apache.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>nexus</id>
+            <name>Kik Maven Plugins</name>
+            <url>http://server-nexus.kik.com/nexus/content/groups/kik/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <name>releases</name>
+            <url>http://server-nexus.kik.com/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <name>snapshots</name>
+            <url>http://server-nexus.kik.com/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

@@ -125,7 +125,7 @@ public final class ProtocTestCompileCustomMojo extends AbstractProtocTestCompile
     protected void addProtocBuilderParameters(final Protoc.Builder protocBuilder) throws MojoExecutionException {
         super.addProtocBuilderParameters(protocBuilder);
 
-        protocBuilder.setNativePluginId(pluginId);
+        protocBuilder.setNativePluginId(sanitizePluginId(pluginId));
         if (pluginToolchain != null && pluginTool != null) {
             //get toolchain from context
             final Toolchain tc = toolchainManager.getToolchainFromBuildContext(pluginToolchain, session);
@@ -152,6 +152,9 @@ public final class ProtocTestCompileCustomMojo extends AbstractProtocTestCompile
             protocBuilder.setNativePluginParameter(pluginParameter);
         }
         protocBuilder.setCustomOutputDirectory(getOutputDirectory());
+        if (pluginId.equals("grpc-python")) {
+            protocBuilder.setPythonOutputDirectory(getOutputDirectory());
+        }
 
         // We need to add project output directory to the protobuf import paths,
         // in case test protobuf definitions extend or depend on production ones

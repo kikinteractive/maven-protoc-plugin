@@ -1017,4 +1017,11 @@ abstract class AbstractProtocMojo extends AbstractMojo {
                 classifier,
                 Artifact.SCOPE_RUNTIME);
     }
+
+    protected String sanitizePluginId(String pluginId) {
+        if (pluginId.equals("grpc-python")) {
+            return "grpc";
+        }
+        return pluginId;
+    }
 }
